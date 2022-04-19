@@ -29,19 +29,20 @@ class App extends React.Component {
   handleCitySubmit = async (event) => {
     event.preventDefault();
     try {
-      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.location}&format=json`;
+      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
       let cityData = await axios.get(url);
       this.setState({
         cityData: cityData.data[0],
         cityName: cityData.data[0].display_name,
-        cityLat: cityData.data[0].cityLat,
-        cityLon: cityData.data[0].cityLon
+        cityLat: cityData.data[0].lat,
+        cityLon: cityData.data[0].lon
       });
     } catch (error) {
       this.setState({
         error: true,
-        errorMsg: `An Error Occurred: ${error.response.status}`
+        errorMsg: `ERROR: Unable to geocode: ${error.response.status}`
       });
+      console.log(this.state.errorMsg)
     }
   }
 
@@ -51,22 +52,25 @@ class App extends React.Component {
         <div>
           <form onSubmit={this.handleCitySubmit}>
             <input
-              type="text"
-              name="city"
+              type='text'
+              name='city'
               onInput={this.handleCityInput}
-              placeholder="Search for City"
+              placeholder='Search for City'
             />
             <button type="submit">Explore!</button>
           </form>
         </div>
         <Card style={{
           width: '20em',
-          height: '25em',
+          height: '30em',
           textAlign: 'center',
           backgroundColor: 'lightgreen',
         }}>
-          <Card.Img variant='top'
-            src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.locationLat},${this.state.locationLon}&zoom=12`} />
+          <Card.Img
+            variant='top'
+            src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityLat},${this.state.cityLon}&zoom=12`}
+            alt={this.props.cityName}
+          />
 
           <Card.Body style={{
             display: 'flex',
