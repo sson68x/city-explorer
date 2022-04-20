@@ -20,47 +20,16 @@
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-## Lab 06
+## Lab 07
 
-Name of feature: Set up your React repo & API keys
-
-Estimate of time needed to complete: 30 min
-
-Start time: 4:00
-
-Finish time: 4:20
-
-Actual time needed to complete: 20 min
-
-Name of feature: Locations
+Name of feature: 2. Wether
 
 Estimate of time needed to complete: 2 hours
 
-Start time: 4:30
+Start time: 
 
-Finish time: 6:50
+Finish time: 
 
-Actual time needed to complete: 2 hours 20 min
-
-Name of feature: Map
-
-Estimate of time needed to complete: 1 hour 30 min
-
-Start time: 7:00
-
-Finish time: 8:00
-
-Actual time needed to complete: 1 hour
-
-Name of feature: Errors
-
-Estimate of time needed to complete: 30 min
-
-Start time: NOT COMPLTETED
-
-Finish time: NOT COMPLTETED
-
-Actual time needed to complete:
-
+Actual time needed to complete: 
 
 ![Framework](/img/framework.jpg)

@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
 import Card from 'react-bootstrap/Card'
+import Weather from './Weather'
 // import Forms from './Forms';
 
 
@@ -16,21 +17,27 @@ class App extends React.Component {
       cityLat: 0,
       cityLon: 0,
       error: false,
-      errorMsg: ''
+      errorMsg: '',
+      weatherData: {},
+      showWeather: false
     }
   }
 
   handleCityInput = (event) => {
     this.setState({
-      city: event.target.value
+      city: event.target.value,
+      weather: event.target.value
     })
   }
 
   handleCitySubmit = async (event) => {
     event.preventDefault();
     try {
-      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
-      let cityData = await axios.get(url);
+      let cityUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
+
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+    
+      let cityData = await axios.get(cityUrl);
       this.setState({
         cityData: cityData.data[0],
         cityName: cityData.data[0].display_name,
@@ -62,7 +69,7 @@ class App extends React.Component {
         </div>
         <Card style={{
           width: '20em',
-          height: '30em',
+          height: '50em',
           textAlign: 'center',
           backgroundColor: 'lightgreen',
         }}>
@@ -89,6 +96,7 @@ class App extends React.Component {
             <Card.Title>{this.state.city}</Card.Title>
             <Card.Text>Latitude: {this.state.cityLat}</Card.Text>
             <Card.Text>Longitude: {this.state.cityLon}</Card.Text>
+            <Card.Text>Forecast: </Card.Text>
           </Card.Body>
         </Card>
       </>
