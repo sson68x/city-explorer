@@ -22,14 +22,15 @@
 
 ## Lab 07
 
-Name of feature: 2. Wether
+Name of feature: 2. Weather & 3. Errors
 
-Estimate of time needed to complete: 2 hours
+Estimate of time needed to complete: 3 hours
 
-Start time: 
+Start time/date: Apr 19
 
-Finish time: 
+Finish time/date: Apr 20
 
-Actual time needed to complete: 
+Actual time needed to complete: 6-7 hours
 
 ![Framework](/img/framework.jpg)
+![Framework](/img/framework2.jpg)
