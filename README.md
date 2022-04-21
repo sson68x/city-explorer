@@ -20,17 +20,17 @@
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-## Lab 07
+## Lab 08
 
-Name of feature: 2. Weather & 3. Errors
+Name of feature: 2. Weather & 3. Movies
 
 Estimate of time needed to complete: 3 hours
 
-Start time/date: Apr 19
+Start time/date: Apr 20
 
-Finish time/date: Apr 20
+Finish time/date: --
 
-Actual time needed to complete: 6-7 hours
+Actual time needed to complete: --
 
 ![Framework](/img/framework.jpg)
 ![Framework](/img/framework2.jpg)
