@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
 import Card from 'react-bootstrap/Card'
 import Weather from './Weather'
+import Movies from './Movies'
 // import Forms from './Forms';
 
 
@@ -11,8 +12,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchQuery: '',
       city: '',
-      cityData: {},
+      cityData: [],
       cityName: '',
       cityLat: 0,
       cityLon: 0,
@@ -21,14 +23,20 @@ class App extends React.Component {
       weatherError: false,
       weatherErrorMsg: '',
       weatherData: [],
-      showWeather: false
+      showWeather: false,
+      moviesError: false,
+      moviesErrorMsg: '',
+      moviesData: [],
+      showMovies: false
     }
   }
 
   handleCityInput = (event) => {
     this.setState({
+      searchQuery: event.target.value,
       city: event.target.value,
-      weather: event.target.value
+      weather: event.target.value,
+      movies: event.target.value
     })
   }
 
@@ -53,27 +61,45 @@ class App extends React.Component {
         cityError: true,
         cityErrorMsg: `ERROR: Unable to geocode: ${error.response.status}`
       });
-      console.log(this.state.errorMsg)
     }
-    this.handleGetWeather(this.state)
+    this.handleGetWeather(this.state.city)
+    this.handelGetMovies(this.state.city)
   }
 
   handleGetWeather = async () => {
     try {
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
-      let weatherResponse = await axios.get(weatherUrl);
+      let weatherResults = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.searchQuery}`);
+      console.log(weatherResults.data);
+      // let weatherResponse = await axios.get(weatherUrl);
       this.setState({
-        weatherData: weatherResponse.data,
+        weatherData: weatherResults.data,
         showWeather: true,
         weatherError: false
       })
     } catch (error) {
       this.setState({
-        weatherData:[],
+        weatherData: [],
         weatherError: true,
         weatherErrorMsg: `ERROR: Unable to get weather data: ${error.response.status}`
       });
-      console.log(this.state.errorMsg)
+    }
+  }
+
+  handelGetMovies = async () => {
+    try {
+      let moviesResults = await axios.get(`${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`);
+      console.log(moviesResults.data);
+      this.setState({
+        moviesData: moviesResults.data,
+        showMovies: true,
+        moviesError: false
+      })
+    } catch (error) {
+      this.setState({
+        moviesData: [],
+        moviesError: true,
+        moviesErrorMsg: `ERROR: Unable to get movies data: ${error.response.status}`
+      });
     }
   }
 
@@ -110,26 +136,39 @@ class App extends React.Component {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Card.Title>{this.state.city}</Card.Title>
+            <Card.Title>{this.state.city.toUpperCase()}</Card.Title>
             <Card.Text>Latitude: {this.state.cityLat}</Card.Text>
             <Card.Text>Longitude: {this.state.cityLon}</Card.Text>
+
             {this.state.showWeather &&
               <Weather
                 weather={this.state.weatherData}
               />}
+
+            {this.state.showMovies &&
+              <Movies
+                movies={this.state.moviesData}
+              />}
+
             {
               this.state.cityError &&
-                <p style={{ textAlign: 'center' }}>
-                  {this.state.cityErrorMsg}
-                </p> 
-
+              <p style={{ textAlign: 'center' }}>
+                {this.state.cityErrorMsg}
+              </p>
             }
-             {
-              this.state.weatherError &&
-                <p style={{ textAlign: 'center' }}>
-                  {this.state.weatherErrorMsg}
-                </p> 
 
+            {
+              this.state.weatherError &&
+              <p style={{ textAlign: 'center' }}>
+                {this.state.weatherErrorMsg}
+              </p>
+            }
+
+            {
+              this.state.moviesError &&
+              <p style={{ textAlign: 'center' }}>
+                {this.state.moviesErrorMsg}
+              </p>
             }
           </Card.Body>
         </Card>
