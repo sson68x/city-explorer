@@ -28,9 +28,12 @@ Estimate of time needed to complete: 3 hours
 
 Start time/date: Apr 20
 
-Finish time/date: --
+Finish time/date: Apr 21
 
-Actual time needed to complete: --
+Actual time needed to complete: 7 hours
 
-![Framework](/img/framework.jpg)
-![Framework](/img/framework2.jpg)
+![WRRC](/img/framework.jpg)
+
+
+<!-- ![Framework](/img/framework.jpg)
+![Framework](/img/framework2.jpg) -->
