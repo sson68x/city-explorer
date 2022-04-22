@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card'
 import Weather from './Weather'
 import Movies from './Movies'
 import { Button, Container, Form } from 'react-bootstrap';
-// import Forms from './Forms';
 
 
 class App extends React.Component {
@@ -16,17 +15,14 @@ class App extends React.Component {
       searchQuery: '',
       city: '',
       cityData: [],
-      // cityName: '',
       cityLat: 0,
       cityLon: 0,
       cityError: false,
       cityErrorMsg: '',
-
       weatherError: false,
       weatherErrorMsg: '',
       weatherData: [],
       showWeather: false,
-
       moviesError: false,
       moviesErrorMsg: '',
       moviesData: [],
@@ -48,7 +44,6 @@ class App extends React.Component {
       let cityData = await axios.get(cityUrl);
       this.setState({
         cityData: cityData.data[0],
-        // cityName: cityData.data[0].display_name,
         cityLat: cityData.data[0].lat,
         cityLon: cityData.data[0].lon,
         cityError: false,
@@ -76,14 +71,11 @@ class App extends React.Component {
       let weatherResults = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.searchQuery}`);
       console.log(weatherResults.data);
       this.setState({
-        weatherData: weatherResults.data,
-        // weatherError: false
+        weatherData: weatherResults.data
       })
     } catch (error) {
       this.setState({
         weatherData: [],
-        // weatherError: true,
-        // weatherErrorMsg: `ERROR: Unable to get weather data: ${error.response.status}`
       });
     }
   }
@@ -108,19 +100,8 @@ class App extends React.Component {
 
   render() {
 
-    // let carouselMovies = this.state.moviesData.map((movie, idx) => (
-    //   <Carousel.Item key={idx}>
-    //     <Carousel.Caption>
-    //       <h3 style={{ backgroundColor: 'teal', borderRadius: '5px', width: 'max-content', margin: 'auto', padding: '5px' }}>
-    //         Title: {movie.title}
-    //       </h3>
-    //     </Carousel.Caption>
-    //   </Carousel.Item>
-    // ))
-    
     return (
       <>
-
         <h1>City Explorer</h1>
         <Container>
           <Form onSubmit={this.handleCitySubmit} style={{ width: 'max-content', margin: 'auto' }}>
@@ -192,10 +173,11 @@ class App extends React.Component {
           </p>
         }
 
-        {this.state.showMovies &&
-          <Movies
-            movies={this.state.moviesData}
-          />}
+          {this.state.showMovies &&
+            <Movies
+              movies={this.state.moviesData}
+            />}
+
       </>
     )
   }

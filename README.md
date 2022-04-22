@@ -20,20 +20,26 @@
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
-## Lab 08
+## Lab 09
 
-Name of feature: 2. Weather & 3. Movies
+Name of feature: 1. Refactor
 
-Estimate of time needed to complete: 3 hours
+Estimate of time needed to complete: 30 min
 
-Start time/date: Apr 20
+Start time: 3:30
 
-Finish time/date: Apr 21
+Finish time: 3:45
 
-Actual time needed to complete: 7 hours
+Actual time needed to complete: 15 min
 
-![WRRC](/img/framework.jpg)
+Name of feature: 2. Refactor
 
+Estimate of time needed to complete: 30 min
 
-<!-- ![Framework](/img/framework.jpg)
-![Framework](/img/framework2.jpg) -->
+Start time: 4:00
+
+Finish time: --
+
+Actual time needed to complete: Not completed
+
+![WRRC](/img/Lab9WRRC.jpg)
