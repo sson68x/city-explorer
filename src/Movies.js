@@ -6,8 +6,9 @@ class Movies extends React.Component {
     return (
       this.props.movies.map((movie, idx) => (
         <div key={idx}>
-          <p>{movie.title}</p>
-          <p>{movie.overview}</p>
+          <p>{movie.poster}</p>
+          <p>Title: {movie.title}</p>
+          <p>Rating: {movie.overview}</p>
         </div>
       )
       )
