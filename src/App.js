@@ -5,7 +5,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card'
 import Weather from './Weather'
 import Movies from './Movies'
-import { Button, Carousel, Container, Form } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 // import Forms from './Forms';
 
 
@@ -117,6 +117,7 @@ class App extends React.Component {
     //     </Carousel.Caption>
     //   </Carousel.Item>
     // ))
+    
     return (
       <>
 
