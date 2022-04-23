@@ -112,74 +112,76 @@ class App extends React.Component {
                 onInput={this.handleCityInput}
                 placeholder='Search for a City'
               />
-            </Form.Group>
             <Button type="submit" style={{ margin: '5px' }}>Explore!</Button>
+            </Form.Group>
           </Form>
         </Container>
 
-
-        <Card style={{
-          width: '20em',
-          height: '40em',
-          textAlign: 'center',
-          backgroundColor: 'lightgreen',
-          margin: 'auto'
-        }}>
-
-          <Card.Img
-            variant='top'
-            src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityLat},${this.state.cityLon}&zoom=12`}
-            alt={this.props.cityName}
-          />
-
-          <Card.Body style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
+      
+          <Card style={{
+            width: '20em',
+            height: '40em',
+            textAlign: 'center',
+            backgroundColor: 'lightgreen',
+            margin: 'auto'
           }}>
 
-            {
-              this.state.cityError &&
-              <p style={{ textAlign: 'center' }}>
-                {this.state.cityErrorMsg}
-              </p>
-            }
+            <Card.Img
+              variant='top'
+              src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityLat},${this.state.cityLon}&zoom=12`}
+              alt={this.props.cityName}
+            />
 
-            {
-              this.state.weatherError &&
-              <p style={{ textAlign: 'center' }}>
-                {this.state.weatherErrorMsg}
-              </p>
-            }
+            <Card.Body style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+
+              {
+                this.state.cityError &&
+                <p style={{ textAlign: 'center' }}>
+                  {this.state.cityErrorMsg}
+                </p>
+              }
+
+              {
+                this.state.weatherError &&
+                <p style={{ textAlign: 'center' }}>
+                  {this.state.weatherErrorMsg}
+                </p>
+              }
 
 
-            <Card.Title>{this.state.searchQuery.toUpperCase()}</Card.Title>
-            <Card.Text>Latitude: {this.state.cityLat}</Card.Text>
-            <Card.Text>Longitude: {this.state.cityLon}</Card.Text>
-            <Card.Text>Forecast</Card.Text>
-            {this.state.showWeather &&
-              <Weather
-                weather={this.state.weatherData}
-              />}
+              <Card.Title>{this.state.searchQuery.toUpperCase()}</Card.Title>
+              <Card.Text>Latitude: {this.state.cityLat}</Card.Text>
+              <Card.Text>Longitude: {this.state.cityLon}</Card.Text>
+              <Card.Text>Forecast</Card.Text>
+              {this.state.showWeather &&
+                <Weather
+                  weather={this.state.weatherData}
+                />}
 
-          </Card.Body>
-        </Card>
+            </Card.Body>
+          </Card>
 
-        {
-          this.state.moviesError &&
-          <p style={{ textAlign: 'center' }}>
-            {this.state.moviesErrorMsg}
-          </p>
-        }
+          <div id='contents'>
+          {
+            this.state.moviesError &&
+            <p style={{ textAlign: 'center' }}>
+              {this.state.moviesErrorMsg}
+            </p>
+          }
 
           {this.state.showMovies &&
             <Movies
               movies={this.state.moviesData}
             />}
-
+        </div>
       </>
-    )
-  }
-}
+    );
+  };
+};
+
 export default App;
