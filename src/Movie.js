@@ -26,11 +26,13 @@ class Movie extends React.Component {
           <Card.Text style={{ marginTop: '10px' }}>
             Rating: {this.props.movie.vote}
           </Card.Text>
-
-          <Card.Img id="poster"
-            class="mx-auto"
-            src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster}`} alt={this.props.movie.title}
-          />
+          {
+            this.props.movie.poster && (
+              <Card.Img id="poster"
+                className="mx-auto"
+                src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster}`} alt={this.props.movie.title} />
+            )
+          }
           <Card.Body
             style={{
               display: 'flex',
@@ -38,7 +40,10 @@ class Movie extends React.Component {
               alignItems: 'center',
               overflow: 'auto',
             }}>
-            <Card.Text><h5>Overview</h5> </Card.Text>
+            <Card.Text style={{
+              fontSize: '1.3em',
+              fontWeight: 'bold'
+            }}>Overview</Card.Text>
             <Card.Text>{this.props.movie.overview}</Card.Text>
           </Card.Body>
         </Card>
