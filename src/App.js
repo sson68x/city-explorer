@@ -1,11 +1,10 @@
 import React from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios';
-import Card from 'react-bootstrap/Card'
 import Weather from './Weather'
 import Movies from './Movies'
-import { Button, Container, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Container, Form, Card } from 'react-bootstrap';
 
 
 class App extends React.Component {
@@ -48,7 +47,9 @@ class App extends React.Component {
         cityLon: cityData.data[0].lon,
         cityError: false,
         weatherError: false,
-        showWeather: true
+        moviesError: false,
+        showWeather: true,
+        showMovies: true
       });
     } catch (error) {
       this.setState({
@@ -57,9 +58,12 @@ class App extends React.Component {
         cityLon: null,
         cityError: true,
         showWeather: false,
+        showMovies: false,
         weatherError: true,
+        moviesError: true,
         cityErrorMsg: `Unable to geocode: ERROR ${error.response.status}`,
-        weatherErrorMsg: `Unable to get weather data: ERROR ${error.response.status}`
+        weatherErrorMsg: `Unable to get weather data: ERROR ${error.response.status}`,
+        moviesErrorMsg: `Unable to get movie data sets: ERROR ${error.response.status}`
       });
     }
     this.handleGetWeather()
@@ -67,27 +71,16 @@ class App extends React.Component {
   }
 
   handleGetWeather = async () => {
-    // try {
-      let cityUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
-      axios.get(cityUrl)
-        .then(weatherResults => `${process.env.REACT_APP_SERVER}/weather?lat=${weatherResults.data[0].lat}&lon=${weatherResults.data[0].lon}`)
-        .then(weatherUrl => axios.get(weatherUrl))
-        .then(weatherData => this.setState({ weatherData: weatherData.data }))
-        .catch(error => this.setState({
-          weatherData: [],
-          weatherError: true,
-          weatherErrorMsg: `Unable to get weather data: ERROR ${error.response.status}`
-        }))
-      // await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.searchQuery}`);
-      // console.log(weatherResults.data);
-      // this.setState({
-      //   weatherData: weatherResults.data
-      // })
-    // } catch (error) {
-    //   this.setState({
-    //     weatherData: [],
-    //   });
-    // }
+    let cityUrl = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.searchQuery}&format=json`;
+    axios.get(cityUrl)
+      .then(weatherResults => `${process.env.REACT_APP_SERVER}/weather?lat=${weatherResults.data[0].lat}&lon=${weatherResults.data[0].lon}`)
+      .then(weatherUrl => axios.get(weatherUrl))
+      .then(weatherData => this.setState({ weatherData: weatherData.data }))
+      .catch(error => this.setState({
+        weatherData: [],
+        weatherError: true,
+        weatherErrorMsg: `Unable to get weather data: ERROR ${error.response.status}`
+      }))
   }
 
   handelGetMovies = async () => {
@@ -95,8 +88,6 @@ class App extends React.Component {
       let moviesResults = await axios.get(`${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.searchQuery}`);
       this.setState({
         moviesData: moviesResults.data,
-        showMovies: true,
-        moviesError: false
       })
     } catch (error) {
       this.setState({
@@ -119,63 +110,58 @@ class App extends React.Component {
                 type='text'
                 name='city'
                 onInput={this.handleCityInput}
-                placeholder='Search for a City'
+                placeholder='Search for a city'
               />
               <Button type="submit" style={{ margin: '5px' }}>Explore!</Button>
             </Form.Group>
           </Form>
         </Container>
 
-
-        <Card style={{
-          width: '20em',
-          height: '40em',
-          textAlign: 'center',
-          backgroundColor: 'lightgreen',
-          margin: 'auto'
-        }}>
-
+        <Card>
           <Card.Img
             variant='top'
             src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityLat},${this.state.cityLon}&zoom=12`}
             alt={this.props.city}
           />
 
-          <Card.Body style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+          <Card.Body
+            style={{
+              background: 'lightgreen',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
 
             {
               this.state.cityError &&
-              <p style={{ textAlign: 'center' }}>
+              <p>
                 {this.state.cityErrorMsg}
               </p>
             }
 
             {
               this.state.weatherError &&
-              <p style={{ textAlign: 'center' }}>
+              <p>
                 {this.state.weatherErrorMsg}
               </p>
             }
-
 
             <Card.Title>{this.state.searchQuery.toUpperCase()}</Card.Title>
             <Card.Text>Latitude: {this.state.cityLat}</Card.Text>
             <Card.Text>Longitude: {this.state.cityLon}</Card.Text>
 
-            {this.state.showWeather &&
+            {
+              this.state.showWeather &&
               <Weather
                 weather={this.state.weatherData}
-              />}
+              />
+            }
 
           </Card.Body>
         </Card>
 
-        <div id='contents'>
+        <div id='movies'>
           {
             this.state.moviesError &&
             <p style={{ textAlign: 'center' }}>
@@ -183,10 +169,12 @@ class App extends React.Component {
             </p>
           }
 
-          {this.state.showMovies &&
+          {
+            this.state.showMovies &&
             <Movies
               movies={this.state.moviesData}
-            />}
+            />
+          }
         </div>
       </>
     );
